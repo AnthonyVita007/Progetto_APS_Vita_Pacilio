@@ -9,11 +9,13 @@ from . import actors
 from . import network
 
 from . import config
+from . import benchmarks
 
 __all__ = [
     'crypto',
     'actors',
     'network',
-    'config'
+    'config', 
+    'benchmarks'
 ]
 # voto_elettronico package

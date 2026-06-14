@@ -152,12 +152,28 @@
 
     </div>
     <a class="headerlink" href="#genera_salt"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="genera_salt-21"><a href="#genera_salt-21"><span class="linenos">21</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">genera_salt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dimensione</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-</span><span id="genera_salt-22"><a href="#genera_salt-22"><span class="linenos">22</span></a>        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">urandom</span><span class="p">(</span><span class="n">dimensione</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="genera_salt-15"><a href="#genera_salt-15"><span class="linenos">15</span></a><span class="k">def</span><span class="w"> </span><span class="nf">genera_salt</span><span class="p">(</span><span class="n">dimensione</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+</span><span id="genera_salt-16"><a href="#genera_salt-16"><span class="linenos">16</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Genera un salt crittografico ad alta entropia.</span>
+</span><span id="genera_salt-17"><a href="#genera_salt-17"><span class="linenos">17</span></a>
+</span><span id="genera_salt-18"><a href="#genera_salt-18"><span class="linenos">18</span></a><span class="sd">    Args:</span>
+</span><span id="genera_salt-19"><a href="#genera_salt-19"><span class="linenos">19</span></a><span class="sd">        dimensione (int, optional): La lunghezza del salt in byte. Default a 32 byte (256 bit).</span>
+</span><span id="genera_salt-20"><a href="#genera_salt-20"><span class="linenos">20</span></a>
+</span><span id="genera_salt-21"><a href="#genera_salt-21"><span class="linenos">21</span></a><span class="sd">    Returns:</span>
+</span><span id="genera_salt-22"><a href="#genera_salt-22"><span class="linenos">22</span></a><span class="sd">        bytes: Sequenza di byte casuali generati dal CSPRNG del sistema operativo.</span>
+</span><span id="genera_salt-23"><a href="#genera_salt-23"><span class="linenos">23</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="genera_salt-24"><a href="#genera_salt-24"><span class="linenos">24</span></a>    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">urandom</span><span class="p">(</span><span class="n">dimensione</span><span class="p">)</span>
 </span></pre></div>
 
 
-    
+            <div class="docstring"><p>Genera un salt crittografico ad alta entropia.</p>
+
+<p>Args:
+    dimensione (int, optional): La lunghezza del salt in byte. Default a 32 byte (256 bit).</p>
+
+<p>Returns:
+    bytes: Sequenza di byte casuali generati dal CSPRNG del sistema operativo.</p>
+</div>
+
 
                 </section>
                 <section id="calcola_h0">
@@ -171,15 +187,46 @@
 
     </div>
     <a class="headerlink" href="#calcola_h0"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="calcola_h0-24"><a href="#calcola_h0-24"><span class="linenos">24</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">calcola_h0</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codice_fiscale</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">salt</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-</span><span id="calcola_h0-25"><a href="#calcola_h0-25"><span class="linenos">25</span></a>        <span class="n">digest</span> <span class="o">=</span> <span class="n">hashes</span><span class="o">.</span><span class="n">Hash</span><span class="p">(</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">())</span>
-</span><span id="calcola_h0-26"><a href="#calcola_h0-26"><span class="linenos">26</span></a>        <span class="n">payload</span> <span class="o">=</span> <span class="n">codice_fiscale</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">salt</span>
-</span><span id="calcola_h0-27"><a href="#calcola_h0-27"><span class="linenos">27</span></a>        <span class="n">digest</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
-</span><span id="calcola_h0-28"><a href="#calcola_h0-28"><span class="linenos">28</span></a>        <span class="k">return</span> <span class="n">digest</span><span class="o">.</span><span class="n">finalize</span><span class="p">()</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="calcola_h0-27"><a href="#calcola_h0-27"><span class="linenos">27</span></a><span class="k">def</span><span class="w"> </span><span class="nf">calcola_h0</span><span class="p">(</span><span class="n">codice_fiscale</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">salt</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+</span><span id="calcola_h0-28"><a href="#calcola_h0-28"><span class="linenos">28</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Calcola l&#39;hash H0 a partire dall&#39;identità reale (Codice Fiscale) e un salt.</span>
+</span><span id="calcola_h0-29"><a href="#calcola_h0-29"><span class="linenos">29</span></a>
+</span><span id="calcola_h0-30"><a href="#calcola_h0-30"><span class="linenos">30</span></a><span class="sd">    Questa funzione modella l&#39;operazione eseguita localmente dall&#39;elettore</span>
+</span><span id="calcola_h0-31"><a href="#calcola_h0-31"><span class="linenos">31</span></a><span class="sd">    (o tramite il suo dispositivo) presso l&#39;Ente Fisico. L&#39;uso del salt ad alta</span>
+</span><span id="calcola_h0-32"><a href="#calcola_h0-32"><span class="linenos">32</span></a><span class="sd">    entropia è cruciale per prevenire attacchi a dizionario o rainbow table </span>
+</span><span id="calcola_h0-33"><a href="#calcola_h0-33"><span class="linenos">33</span></a><span class="sd">    nel caso in cui il registro degli hash dell&#39;Ente Fisico venga compromesso.</span>
+</span><span id="calcola_h0-34"><a href="#calcola_h0-34"><span class="linenos">34</span></a>
+</span><span id="calcola_h0-35"><a href="#calcola_h0-35"><span class="linenos">35</span></a><span class="sd">    Args:</span>
+</span><span id="calcola_h0-36"><a href="#calcola_h0-36"><span class="linenos">36</span></a><span class="sd">        codice_fiscale (str): Il Codice Fiscale dell&#39;utente in chiaro.</span>
+</span><span id="calcola_h0-37"><a href="#calcola_h0-37"><span class="linenos">37</span></a><span class="sd">        salt (bytes): Il salt ad alta entropia generato per lo specifico utente.</span>
+</span><span id="calcola_h0-38"><a href="#calcola_h0-38"><span class="linenos">38</span></a>
+</span><span id="calcola_h0-39"><a href="#calcola_h0-39"><span class="linenos">39</span></a><span class="sd">    Returns:</span>
+</span><span id="calcola_h0-40"><a href="#calcola_h0-40"><span class="linenos">40</span></a><span class="sd">        bytes: Il digest SHA-256 risultante dalla concatenazione H(CF || Salt).</span>
+</span><span id="calcola_h0-41"><a href="#calcola_h0-41"><span class="linenos">41</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="calcola_h0-42"><a href="#calcola_h0-42"><span class="linenos">42</span></a>    <span class="n">digest</span> <span class="o">=</span> <span class="n">hashes</span><span class="o">.</span><span class="n">Hash</span><span class="p">(</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">())</span>
+</span><span id="calcola_h0-43"><a href="#calcola_h0-43"><span class="linenos">43</span></a>    
+</span><span id="calcola_h0-44"><a href="#calcola_h0-44"><span class="linenos">44</span></a>    <span class="c1"># Concatenazione logica del Codice Fiscale (codificato in UTF-8) e del salt</span>
+</span><span id="calcola_h0-45"><a href="#calcola_h0-45"><span class="linenos">45</span></a>    <span class="n">payload</span> <span class="o">=</span> <span class="n">codice_fiscale</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">salt</span>
+</span><span id="calcola_h0-46"><a href="#calcola_h0-46"><span class="linenos">46</span></a>    <span class="n">digest</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+</span><span id="calcola_h0-47"><a href="#calcola_h0-47"><span class="linenos">47</span></a>    
+</span><span id="calcola_h0-48"><a href="#calcola_h0-48"><span class="linenos">48</span></a>    <span class="k">return</span> <span class="n">digest</span><span class="o">.</span><span class="n">finalize</span><span class="p">()</span>
 </span></pre></div>
 
 
-    
+            <div class="docstring"><p>Calcola l'hash H0 a partire dall'identità reale (Codice Fiscale) e un salt.</p>
+
+<p>Questa funzione modella l'operazione eseguita localmente dall'elettore
+(o tramite il suo dispositivo) presso l'Ente Fisico. L'uso del salt ad alta
+entropia è cruciale per prevenire attacchi a dizionario o rainbow table 
+nel caso in cui il registro degli hash dell'Ente Fisico venga compromesso.</p>
+
+<p>Args:
+    codice_fiscale (str): Il Codice Fiscale dell'utente in chiaro.
+    salt (bytes): Il salt ad alta entropia generato per lo specifico utente.</p>
+
+<p>Returns:
+    bytes: Il digest SHA-256 risultante dalla concatenazione H(CF || Salt).</p>
+</div>
+
 
                 </section>
                 <section id="calcola_h1">
@@ -193,14 +240,41 @@
 
     </div>
     <a class="headerlink" href="#calcola_h1"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="calcola_h1-30"><a href="#calcola_h1-30"><span class="linenos">30</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">calcola_h1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hash_h0</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-</span><span id="calcola_h1-31"><a href="#calcola_h1-31"><span class="linenos">31</span></a>        <span class="n">digest</span> <span class="o">=</span> <span class="n">hashes</span><span class="o">.</span><span class="n">Hash</span><span class="p">(</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">())</span>
-</span><span id="calcola_h1-32"><a href="#calcola_h1-32"><span class="linenos">32</span></a>        <span class="n">digest</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">hash_h0</span><span class="p">)</span>
-</span><span id="calcola_h1-33"><a href="#calcola_h1-33"><span class="linenos">33</span></a>        <span class="k">return</span> <span class="n">digest</span><span class="o">.</span><span class="n">finalize</span><span class="p">()</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="calcola_h1-51"><a href="#calcola_h1-51"><span class="linenos">51</span></a><span class="k">def</span><span class="w"> </span><span class="nf">calcola_h1</span><span class="p">(</span><span class="n">hash_h0</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+</span><span id="calcola_h1-52"><a href="#calcola_h1-52"><span class="linenos">52</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Calcola l&#39;hash H1 applicando una seconda passata di hashing su H0.</span>
+</span><span id="calcola_h1-53"><a href="#calcola_h1-53"><span class="linenos">53</span></a>
+</span><span id="calcola_h1-54"><a href="#calcola_h1-54"><span class="linenos">54</span></a><span class="sd">    Questa operazione viene eseguita dalla CA1. Apponendo un ulteriore</span>
+</span><span id="calcola_h1-55"><a href="#calcola_h1-55"><span class="linenos">55</span></a><span class="sd">    livello di hash prima della firma (Certificato di Identità), si aggiunge un</span>
+</span><span id="calcola_h1-56"><a href="#calcola_h1-56"><span class="linenos">56</span></a><span class="sd">    layer di sicurezza che isola ulteriormente la struttura dati dell&#39;Ente Fisico</span>
+</span><span id="calcola_h1-57"><a href="#calcola_h1-57"><span class="linenos">57</span></a><span class="sd">    da quella della CA1.</span>
+</span><span id="calcola_h1-58"><a href="#calcola_h1-58"><span class="linenos">58</span></a>
+</span><span id="calcola_h1-59"><a href="#calcola_h1-59"><span class="linenos">59</span></a><span class="sd">    Args:</span>
+</span><span id="calcola_h1-60"><a href="#calcola_h1-60"><span class="linenos">60</span></a><span class="sd">        hash_h0 (bytes): L&#39;hash H0 ricevuto dall&#39;Ente Fisico.</span>
+</span><span id="calcola_h1-61"><a href="#calcola_h1-61"><span class="linenos">61</span></a>
+</span><span id="calcola_h1-62"><a href="#calcola_h1-62"><span class="linenos">62</span></a><span class="sd">    Returns:</span>
+</span><span id="calcola_h1-63"><a href="#calcola_h1-63"><span class="linenos">63</span></a><span class="sd">        bytes: Il digest SHA-256 risultante da H(H0).</span>
+</span><span id="calcola_h1-64"><a href="#calcola_h1-64"><span class="linenos">64</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="calcola_h1-65"><a href="#calcola_h1-65"><span class="linenos">65</span></a>    <span class="n">digest</span> <span class="o">=</span> <span class="n">hashes</span><span class="o">.</span><span class="n">Hash</span><span class="p">(</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">())</span>
+</span><span id="calcola_h1-66"><a href="#calcola_h1-66"><span class="linenos">66</span></a>    <span class="n">digest</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">hash_h0</span><span class="p">)</span>
+</span><span id="calcola_h1-67"><a href="#calcola_h1-67"><span class="linenos">67</span></a>    
+</span><span id="calcola_h1-68"><a href="#calcola_h1-68"><span class="linenos">68</span></a>    <span class="k">return</span> <span class="n">digest</span><span class="o">.</span><span class="n">finalize</span><span class="p">()</span>
 </span></pre></div>
 
 
-    
+            <div class="docstring"><p>Calcola l'hash H1 applicando una seconda passata di hashing su H0.</p>
+
+<p>Questa operazione viene eseguita dalla CA1. Apponendo un ulteriore
+livello di hash prima della firma (Certificato di Identità), si aggiunge un
+layer di sicurezza che isola ulteriormente la struttura dati dell'Ente Fisico
+da quella della CA1.</p>
+
+<p>Args:
+    hash_h0 (bytes): L'hash H0 ricevuto dall'Ente Fisico.</p>
+
+<p>Returns:
+    bytes: Il digest SHA-256 risultante da H(H0).</p>
+</div>
+
 
                 </section>
                 <section id="MerkleTree">
@@ -713,18 +787,34 @@ client dell'utente per validare che il suo voto sia nel registro.</p>
 
     </div>
     <a class="headerlink" href="#genera_coppia_chiavi"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="genera_coppia_chiavi-26"><a href="#genera_coppia_chiavi-26"><span class="linenos">26</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">genera_coppia_chiavi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2048</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">rsa</span><span class="o">.</span><span class="n">RSAPrivateKey</span><span class="p">,</span> <span class="n">rsa</span><span class="o">.</span><span class="n">RSAPublicKey</span><span class="p">]:</span>
-</span><span id="genera_coppia_chiavi-27"><a href="#genera_coppia_chiavi-27"><span class="linenos">27</span></a>        <span class="n">private_key</span> <span class="o">=</span> <span class="n">rsa</span><span class="o">.</span><span class="n">generate_private_key</span><span class="p">(</span>
-</span><span id="genera_coppia_chiavi-28"><a href="#genera_coppia_chiavi-28"><span class="linenos">28</span></a>            <span class="n">public_exponent</span><span class="o">=</span><span class="mi">65537</span><span class="p">,</span>
-</span><span id="genera_coppia_chiavi-29"><a href="#genera_coppia_chiavi-29"><span class="linenos">29</span></a>            <span class="n">key_size</span><span class="o">=</span><span class="n">key_size</span><span class="p">,</span>
-</span><span id="genera_coppia_chiavi-30"><a href="#genera_coppia_chiavi-30"><span class="linenos">30</span></a>            <span class="n">backend</span><span class="o">=</span><span class="n">default_backend</span><span class="p">()</span>
-</span><span id="genera_coppia_chiavi-31"><a href="#genera_coppia_chiavi-31"><span class="linenos">31</span></a>        <span class="p">)</span>
-</span><span id="genera_coppia_chiavi-32"><a href="#genera_coppia_chiavi-32"><span class="linenos">32</span></a>        <span class="n">public_key</span> <span class="o">=</span> <span class="n">private_key</span><span class="o">.</span><span class="n">public_key</span><span class="p">()</span>
-</span><span id="genera_coppia_chiavi-33"><a href="#genera_coppia_chiavi-33"><span class="linenos">33</span></a>        <span class="k">return</span> <span class="n">private_key</span><span class="p">,</span> <span class="n">public_key</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="genera_coppia_chiavi-16"><a href="#genera_coppia_chiavi-16"><span class="linenos">16</span></a><span class="k">def</span><span class="w"> </span><span class="nf">genera_coppia_chiavi</span><span class="p">(</span><span class="n">key_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2048</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">rsa</span><span class="o">.</span><span class="n">RSAPrivateKey</span><span class="p">,</span> <span class="n">rsa</span><span class="o">.</span><span class="n">RSAPublicKey</span><span class="p">]:</span>
+</span><span id="genera_coppia_chiavi-17"><a href="#genera_coppia_chiavi-17"><span class="linenos">17</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Genera una nuova coppia di chiavi asimmetriche RSA.</span>
+</span><span id="genera_coppia_chiavi-18"><a href="#genera_coppia_chiavi-18"><span class="linenos">18</span></a>
+</span><span id="genera_coppia_chiavi-19"><a href="#genera_coppia_chiavi-19"><span class="linenos">19</span></a><span class="sd">    Args:</span>
+</span><span id="genera_coppia_chiavi-20"><a href="#genera_coppia_chiavi-20"><span class="linenos">20</span></a><span class="sd">        key_size (int, optional): Dimensione in bit della chiave. Default a 2048 per bilanciare sicurezza e performance.</span>
+</span><span id="genera_coppia_chiavi-21"><a href="#genera_coppia_chiavi-21"><span class="linenos">21</span></a>
+</span><span id="genera_coppia_chiavi-22"><a href="#genera_coppia_chiavi-22"><span class="linenos">22</span></a><span class="sd">    Returns:</span>
+</span><span id="genera_coppia_chiavi-23"><a href="#genera_coppia_chiavi-23"><span class="linenos">23</span></a><span class="sd">        tuple[rsa.RSAPrivateKey, rsa.RSAPublicKey]: Una tupla contenente la chiave privata inestraibile e la chiave pubblica associata.</span>
+</span><span id="genera_coppia_chiavi-24"><a href="#genera_coppia_chiavi-24"><span class="linenos">24</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="genera_coppia_chiavi-25"><a href="#genera_coppia_chiavi-25"><span class="linenos">25</span></a>    <span class="n">private_key</span> <span class="o">=</span> <span class="n">rsa</span><span class="o">.</span><span class="n">generate_private_key</span><span class="p">(</span>
+</span><span id="genera_coppia_chiavi-26"><a href="#genera_coppia_chiavi-26"><span class="linenos">26</span></a>        <span class="n">public_exponent</span><span class="o">=</span><span class="mi">65537</span><span class="p">,</span>
+</span><span id="genera_coppia_chiavi-27"><a href="#genera_coppia_chiavi-27"><span class="linenos">27</span></a>        <span class="n">key_size</span><span class="o">=</span><span class="n">key_size</span><span class="p">,</span>
+</span><span id="genera_coppia_chiavi-28"><a href="#genera_coppia_chiavi-28"><span class="linenos">28</span></a>        <span class="n">backend</span><span class="o">=</span><span class="n">default_backend</span><span class="p">()</span>
+</span><span id="genera_coppia_chiavi-29"><a href="#genera_coppia_chiavi-29"><span class="linenos">29</span></a>    <span class="p">)</span>
+</span><span id="genera_coppia_chiavi-30"><a href="#genera_coppia_chiavi-30"><span class="linenos">30</span></a>    <span class="n">public_key</span> <span class="o">=</span> <span class="n">private_key</span><span class="o">.</span><span class="n">public_key</span><span class="p">()</span>
+</span><span id="genera_coppia_chiavi-31"><a href="#genera_coppia_chiavi-31"><span class="linenos">31</span></a>    <span class="k">return</span> <span class="n">private_key</span><span class="p">,</span> <span class="n">public_key</span>
 </span></pre></div>
 
 
-    
+            <div class="docstring"><p>Genera una nuova coppia di chiavi asimmetriche RSA.</p>
+
+<p>Args:
+    key_size (int, optional): Dimensione in bit della chiave. Default a 2048 per bilanciare sicurezza e performance.</p>
+
+<p>Returns:
+    tuple[rsa.RSAPrivateKey, rsa.RSAPublicKey]: Una tupla contenente la chiave privata inestraibile e la chiave pubblica associata.</p>
+</div>
+
 
                 </section>
                 <section id="cifra_oaep">
@@ -738,20 +828,42 @@ client dell'utente per validare che il suo voto sia nel registro.</p>
 
     </div>
     <a class="headerlink" href="#cifra_oaep"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="cifra_oaep-35"><a href="#cifra_oaep-35"><span class="linenos">35</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">cifra_oaep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chiave_pubblica</span><span class="p">:</span> <span class="n">rsa</span><span class="o">.</span><span class="n">RSAPublicKey</span><span class="p">,</span> <span class="n">messaggio</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-</span><span id="cifra_oaep-36"><a href="#cifra_oaep-36"><span class="linenos">36</span></a>        <span class="n">crittogramma</span> <span class="o">=</span> <span class="n">chiave_pubblica</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span>
-</span><span id="cifra_oaep-37"><a href="#cifra_oaep-37"><span class="linenos">37</span></a>            <span class="n">messaggio</span><span class="p">,</span>
-</span><span id="cifra_oaep-38"><a href="#cifra_oaep-38"><span class="linenos">38</span></a>            <span class="n">padding</span><span class="o">.</span><span class="n">OAEP</span><span class="p">(</span>
-</span><span id="cifra_oaep-39"><a href="#cifra_oaep-39"><span class="linenos">39</span></a>                <span class="n">mgf</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">MGF1</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()),</span>
-</span><span id="cifra_oaep-40"><a href="#cifra_oaep-40"><span class="linenos">40</span></a>                <span class="n">algorithm</span><span class="o">=</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">(),</span>
-</span><span id="cifra_oaep-41"><a href="#cifra_oaep-41"><span class="linenos">41</span></a>                <span class="n">label</span><span class="o">=</span><span class="kc">None</span>
-</span><span id="cifra_oaep-42"><a href="#cifra_oaep-42"><span class="linenos">42</span></a>            <span class="p">)</span>
-</span><span id="cifra_oaep-43"><a href="#cifra_oaep-43"><span class="linenos">43</span></a>        <span class="p">)</span>
-</span><span id="cifra_oaep-44"><a href="#cifra_oaep-44"><span class="linenos">44</span></a>        <span class="k">return</span> <span class="n">crittogramma</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="cifra_oaep-34"><a href="#cifra_oaep-34"><span class="linenos">34</span></a><span class="k">def</span><span class="w"> </span><span class="nf">cifra_oaep</span><span class="p">(</span><span class="n">chiave_pubblica</span><span class="p">:</span> <span class="n">rsa</span><span class="o">.</span><span class="n">RSAPublicKey</span><span class="p">,</span> <span class="n">messaggio</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+</span><span id="cifra_oaep-35"><a href="#cifra_oaep-35"><span class="linenos">35</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Cifra un payload in chiaro utilizzando RSA con padding OAEP.</span>
+</span><span id="cifra_oaep-36"><a href="#cifra_oaep-36"><span class="linenos">36</span></a><span class="sd">    </span>
+</span><span id="cifra_oaep-37"><a href="#cifra_oaep-37"><span class="linenos">37</span></a><span class="sd">    Garantisce la resistenza contro attacchi CPA randomizzando il crittogramma finale.</span>
+</span><span id="cifra_oaep-38"><a href="#cifra_oaep-38"><span class="linenos">38</span></a>
+</span><span id="cifra_oaep-39"><a href="#cifra_oaep-39"><span class="linenos">39</span></a><span class="sd">    Args:</span>
+</span><span id="cifra_oaep-40"><a href="#cifra_oaep-40"><span class="linenos">40</span></a><span class="sd">        chiave_pubblica (rsa.RSAPublicKey): La chiave pubblica del destinatario (es. PK_Elezione).</span>
+</span><span id="cifra_oaep-41"><a href="#cifra_oaep-41"><span class="linenos">41</span></a><span class="sd">        messaggio (bytes): Il messaggio in chiaro da cifrare.</span>
+</span><span id="cifra_oaep-42"><a href="#cifra_oaep-42"><span class="linenos">42</span></a>
+</span><span id="cifra_oaep-43"><a href="#cifra_oaep-43"><span class="linenos">43</span></a><span class="sd">    Returns:</span>
+</span><span id="cifra_oaep-44"><a href="#cifra_oaep-44"><span class="linenos">44</span></a><span class="sd">        bytes: Il crittogramma generato.</span>
+</span><span id="cifra_oaep-45"><a href="#cifra_oaep-45"><span class="linenos">45</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="cifra_oaep-46"><a href="#cifra_oaep-46"><span class="linenos">46</span></a>    <span class="n">crittogramma</span> <span class="o">=</span> <span class="n">chiave_pubblica</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span>
+</span><span id="cifra_oaep-47"><a href="#cifra_oaep-47"><span class="linenos">47</span></a>        <span class="n">messaggio</span><span class="p">,</span>
+</span><span id="cifra_oaep-48"><a href="#cifra_oaep-48"><span class="linenos">48</span></a>        <span class="n">padding</span><span class="o">.</span><span class="n">OAEP</span><span class="p">(</span>
+</span><span id="cifra_oaep-49"><a href="#cifra_oaep-49"><span class="linenos">49</span></a>            <span class="n">mgf</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">MGF1</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()),</span>
+</span><span id="cifra_oaep-50"><a href="#cifra_oaep-50"><span class="linenos">50</span></a>            <span class="n">algorithm</span><span class="o">=</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">(),</span>
+</span><span id="cifra_oaep-51"><a href="#cifra_oaep-51"><span class="linenos">51</span></a>            <span class="n">label</span><span class="o">=</span><span class="kc">None</span>
+</span><span id="cifra_oaep-52"><a href="#cifra_oaep-52"><span class="linenos">52</span></a>        <span class="p">)</span>
+</span><span id="cifra_oaep-53"><a href="#cifra_oaep-53"><span class="linenos">53</span></a>    <span class="p">)</span>
+</span><span id="cifra_oaep-54"><a href="#cifra_oaep-54"><span class="linenos">54</span></a>    <span class="k">return</span> <span class="n">crittogramma</span>
 </span></pre></div>
 
 
-    
+            <div class="docstring"><p>Cifra un payload in chiaro utilizzando RSA con padding OAEP.</p>
+
+<p>Garantisce la resistenza contro attacchi CPA randomizzando il crittogramma finale.</p>
+
+<p>Args:
+    chiave_pubblica (rsa.RSAPublicKey): La chiave pubblica del destinatario (es. PK_Elezione).
+    messaggio (bytes): Il messaggio in chiaro da cifrare.</p>
+
+<p>Returns:
+    bytes: Il crittogramma generato.</p>
+</div>
+
 
                 </section>
                 <section id="decifra_oaep">
@@ -765,20 +877,38 @@ client dell'utente per validare che il suo voto sia nel registro.</p>
 
     </div>
     <a class="headerlink" href="#decifra_oaep"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="decifra_oaep-46"><a href="#decifra_oaep-46"><span class="linenos">46</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">decifra_oaep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chiave_privata</span><span class="p">:</span> <span class="n">rsa</span><span class="o">.</span><span class="n">RSAPrivateKey</span><span class="p">,</span> <span class="n">crittogramma</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-</span><span id="decifra_oaep-47"><a href="#decifra_oaep-47"><span class="linenos">47</span></a>        <span class="n">messaggio_chiaro</span> <span class="o">=</span> <span class="n">chiave_privata</span><span class="o">.</span><span class="n">decrypt</span><span class="p">(</span>
-</span><span id="decifra_oaep-48"><a href="#decifra_oaep-48"><span class="linenos">48</span></a>            <span class="n">crittogramma</span><span class="p">,</span>
-</span><span id="decifra_oaep-49"><a href="#decifra_oaep-49"><span class="linenos">49</span></a>            <span class="n">padding</span><span class="o">.</span><span class="n">OAEP</span><span class="p">(</span>
-</span><span id="decifra_oaep-50"><a href="#decifra_oaep-50"><span class="linenos">50</span></a>                <span class="n">mgf</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">MGF1</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()),</span>
-</span><span id="decifra_oaep-51"><a href="#decifra_oaep-51"><span class="linenos">51</span></a>                <span class="n">algorithm</span><span class="o">=</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">(),</span>
-</span><span id="decifra_oaep-52"><a href="#decifra_oaep-52"><span class="linenos">52</span></a>                <span class="n">label</span><span class="o">=</span><span class="kc">None</span>
-</span><span id="decifra_oaep-53"><a href="#decifra_oaep-53"><span class="linenos">53</span></a>            <span class="p">)</span>
-</span><span id="decifra_oaep-54"><a href="#decifra_oaep-54"><span class="linenos">54</span></a>        <span class="p">)</span>
-</span><span id="decifra_oaep-55"><a href="#decifra_oaep-55"><span class="linenos">55</span></a>        <span class="k">return</span> <span class="n">messaggio_chiaro</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="decifra_oaep-57"><a href="#decifra_oaep-57"><span class="linenos">57</span></a><span class="k">def</span><span class="w"> </span><span class="nf">decifra_oaep</span><span class="p">(</span><span class="n">chiave_privata</span><span class="p">:</span> <span class="n">rsa</span><span class="o">.</span><span class="n">RSAPrivateKey</span><span class="p">,</span> <span class="n">crittogramma</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+</span><span id="decifra_oaep-58"><a href="#decifra_oaep-58"><span class="linenos">58</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Decifra un crittogramma precedentemente cifrato con padding RSA-OAEP.</span>
+</span><span id="decifra_oaep-59"><a href="#decifra_oaep-59"><span class="linenos">59</span></a>
+</span><span id="decifra_oaep-60"><a href="#decifra_oaep-60"><span class="linenos">60</span></a><span class="sd">    Args:</span>
+</span><span id="decifra_oaep-61"><a href="#decifra_oaep-61"><span class="linenos">61</span></a><span class="sd">        chiave_privata (rsa.RSAPrivateKey): La chiave privata del destinatario (es. SK_Elezione ricostruita).</span>
+</span><span id="decifra_oaep-62"><a href="#decifra_oaep-62"><span class="linenos">62</span></a><span class="sd">        crittogramma (bytes): Il dato cifrato da processare.</span>
+</span><span id="decifra_oaep-63"><a href="#decifra_oaep-63"><span class="linenos">63</span></a>
+</span><span id="decifra_oaep-64"><a href="#decifra_oaep-64"><span class="linenos">64</span></a><span class="sd">    Returns:</span>
+</span><span id="decifra_oaep-65"><a href="#decifra_oaep-65"><span class="linenos">65</span></a><span class="sd">        bytes: Il messaggio decifrato in chiaro.</span>
+</span><span id="decifra_oaep-66"><a href="#decifra_oaep-66"><span class="linenos">66</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="decifra_oaep-67"><a href="#decifra_oaep-67"><span class="linenos">67</span></a>    <span class="n">messaggio_chiaro</span> <span class="o">=</span> <span class="n">chiave_privata</span><span class="o">.</span><span class="n">decrypt</span><span class="p">(</span>
+</span><span id="decifra_oaep-68"><a href="#decifra_oaep-68"><span class="linenos">68</span></a>        <span class="n">crittogramma</span><span class="p">,</span>
+</span><span id="decifra_oaep-69"><a href="#decifra_oaep-69"><span class="linenos">69</span></a>        <span class="n">padding</span><span class="o">.</span><span class="n">OAEP</span><span class="p">(</span>
+</span><span id="decifra_oaep-70"><a href="#decifra_oaep-70"><span class="linenos">70</span></a>            <span class="n">mgf</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">MGF1</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()),</span>
+</span><span id="decifra_oaep-71"><a href="#decifra_oaep-71"><span class="linenos">71</span></a>            <span class="n">algorithm</span><span class="o">=</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">(),</span>
+</span><span id="decifra_oaep-72"><a href="#decifra_oaep-72"><span class="linenos">72</span></a>            <span class="n">label</span><span class="o">=</span><span class="kc">None</span>
+</span><span id="decifra_oaep-73"><a href="#decifra_oaep-73"><span class="linenos">73</span></a>        <span class="p">)</span>
+</span><span id="decifra_oaep-74"><a href="#decifra_oaep-74"><span class="linenos">74</span></a>    <span class="p">)</span>
+</span><span id="decifra_oaep-75"><a href="#decifra_oaep-75"><span class="linenos">75</span></a>    <span class="k">return</span> <span class="n">messaggio_chiaro</span>
 </span></pre></div>
 
 
-    
+            <div class="docstring"><p>Decifra un crittogramma precedentemente cifrato con padding RSA-OAEP.</p>
+
+<p>Args:
+    chiave_privata (rsa.RSAPrivateKey): La chiave privata del destinatario (es. SK_Elezione ricostruita).
+    crittogramma (bytes): Il dato cifrato da processare.</p>
+
+<p>Returns:
+    bytes: Il messaggio decifrato in chiaro.</p>
+</div>
+
 
                 </section>
                 <section id="firma_messaggio">
@@ -792,20 +922,42 @@ client dell'utente per validare che il suo voto sia nel registro.</p>
 
     </div>
     <a class="headerlink" href="#firma_messaggio"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="firma_messaggio-57"><a href="#firma_messaggio-57"><span class="linenos">57</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">firma_messaggio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chiave_privata</span><span class="p">:</span> <span class="n">rsa</span><span class="o">.</span><span class="n">RSAPrivateKey</span><span class="p">,</span> <span class="n">messaggio</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-</span><span id="firma_messaggio-58"><a href="#firma_messaggio-58"><span class="linenos">58</span></a>        <span class="n">firma</span> <span class="o">=</span> <span class="n">chiave_privata</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span>
-</span><span id="firma_messaggio-59"><a href="#firma_messaggio-59"><span class="linenos">59</span></a>            <span class="n">messaggio</span><span class="p">,</span>
-</span><span id="firma_messaggio-60"><a href="#firma_messaggio-60"><span class="linenos">60</span></a>            <span class="n">padding</span><span class="o">.</span><span class="n">PSS</span><span class="p">(</span>
-</span><span id="firma_messaggio-61"><a href="#firma_messaggio-61"><span class="linenos">61</span></a>                <span class="n">mgf</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">MGF1</span><span class="p">(</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()),</span>
-</span><span id="firma_messaggio-62"><a href="#firma_messaggio-62"><span class="linenos">62</span></a>                <span class="n">salt_length</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">PSS</span><span class="o">.</span><span class="n">MAX_LENGTH</span>
-</span><span id="firma_messaggio-63"><a href="#firma_messaggio-63"><span class="linenos">63</span></a>            <span class="p">),</span>
-</span><span id="firma_messaggio-64"><a href="#firma_messaggio-64"><span class="linenos">64</span></a>            <span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()</span>
-</span><span id="firma_messaggio-65"><a href="#firma_messaggio-65"><span class="linenos">65</span></a>        <span class="p">)</span>
-</span><span id="firma_messaggio-66"><a href="#firma_messaggio-66"><span class="linenos">66</span></a>        <span class="k">return</span> <span class="n">firma</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="firma_messaggio-78"><a href="#firma_messaggio-78"><span class="linenos">78</span></a><span class="k">def</span><span class="w"> </span><span class="nf">firma_messaggio</span><span class="p">(</span><span class="n">chiave_privata</span><span class="p">:</span> <span class="n">rsa</span><span class="o">.</span><span class="n">RSAPrivateKey</span><span class="p">,</span> <span class="n">messaggio</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+</span><span id="firma_messaggio-79"><a href="#firma_messaggio-79"><span class="linenos">79</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Appone una firma digitale su un messaggio utilizzando la chiave privata fornita.</span>
+</span><span id="firma_messaggio-80"><a href="#firma_messaggio-80"><span class="linenos">80</span></a><span class="sd">    </span>
+</span><span id="firma_messaggio-81"><a href="#firma_messaggio-81"><span class="linenos">81</span></a><span class="sd">    Viene impiegato il padding PSS con digest SHA-256 (equivalente moderno del FDH).</span>
+</span><span id="firma_messaggio-82"><a href="#firma_messaggio-82"><span class="linenos">82</span></a>
+</span><span id="firma_messaggio-83"><a href="#firma_messaggio-83"><span class="linenos">83</span></a><span class="sd">    Args:</span>
+</span><span id="firma_messaggio-84"><a href="#firma_messaggio-84"><span class="linenos">84</span></a><span class="sd">        chiave_privata (rsa.RSAPrivateKey): La chiave privata dell&#39;entità firmante (es. SK_CA2).</span>
+</span><span id="firma_messaggio-85"><a href="#firma_messaggio-85"><span class="linenos">85</span></a><span class="sd">        messaggio (bytes): Il messaggio originale su cui calcolare l&#39;hash e apporre la firma.</span>
+</span><span id="firma_messaggio-86"><a href="#firma_messaggio-86"><span class="linenos">86</span></a>
+</span><span id="firma_messaggio-87"><a href="#firma_messaggio-87"><span class="linenos">87</span></a><span class="sd">    Returns:</span>
+</span><span id="firma_messaggio-88"><a href="#firma_messaggio-88"><span class="linenos">88</span></a><span class="sd">        bytes: La firma digitale generata.</span>
+</span><span id="firma_messaggio-89"><a href="#firma_messaggio-89"><span class="linenos">89</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="firma_messaggio-90"><a href="#firma_messaggio-90"><span class="linenos">90</span></a>    <span class="n">firma</span> <span class="o">=</span> <span class="n">chiave_privata</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span>
+</span><span id="firma_messaggio-91"><a href="#firma_messaggio-91"><span class="linenos">91</span></a>        <span class="n">messaggio</span><span class="p">,</span>
+</span><span id="firma_messaggio-92"><a href="#firma_messaggio-92"><span class="linenos">92</span></a>        <span class="n">padding</span><span class="o">.</span><span class="n">PSS</span><span class="p">(</span>
+</span><span id="firma_messaggio-93"><a href="#firma_messaggio-93"><span class="linenos">93</span></a>            <span class="n">mgf</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">MGF1</span><span class="p">(</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()),</span>
+</span><span id="firma_messaggio-94"><a href="#firma_messaggio-94"><span class="linenos">94</span></a>            <span class="n">salt_length</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">PSS</span><span class="o">.</span><span class="n">MAX_LENGTH</span>
+</span><span id="firma_messaggio-95"><a href="#firma_messaggio-95"><span class="linenos">95</span></a>        <span class="p">),</span>
+</span><span id="firma_messaggio-96"><a href="#firma_messaggio-96"><span class="linenos">96</span></a>        <span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()</span>
+</span><span id="firma_messaggio-97"><a href="#firma_messaggio-97"><span class="linenos">97</span></a>    <span class="p">)</span>
+</span><span id="firma_messaggio-98"><a href="#firma_messaggio-98"><span class="linenos">98</span></a>    <span class="k">return</span> <span class="n">firma</span>
 </span></pre></div>
 
 
-    
+            <div class="docstring"><p>Appone una firma digitale su un messaggio utilizzando la chiave privata fornita.</p>
+
+<p>Viene impiegato il padding PSS con digest SHA-256 (equivalente moderno del FDH).</p>
+
+<p>Args:
+    chiave_privata (rsa.RSAPrivateKey): La chiave privata dell'entità firmante (es. SK_CA2).
+    messaggio (bytes): Il messaggio originale su cui calcolare l'hash e apporre la firma.</p>
+
+<p>Returns:
+    bytes: La firma digitale generata.</p>
+</div>
+
 
                 </section>
                 <section id="verifica_firma">
@@ -819,24 +971,44 @@ client dell'utente per validare che il suo voto sia nel registro.</p>
 
     </div>
     <a class="headerlink" href="#verifica_firma"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="verifica_firma-68"><a href="#verifica_firma-68"><span class="linenos">68</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">verifica_firma</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chiave_pubblica</span><span class="p">:</span> <span class="n">rsa</span><span class="o">.</span><span class="n">RSAPublicKey</span><span class="p">,</span> <span class="n">firma</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">messaggio</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-</span><span id="verifica_firma-69"><a href="#verifica_firma-69"><span class="linenos">69</span></a>        <span class="k">try</span><span class="p">:</span>
-</span><span id="verifica_firma-70"><a href="#verifica_firma-70"><span class="linenos">70</span></a>            <span class="n">chiave_pubblica</span><span class="o">.</span><span class="n">verify</span><span class="p">(</span>
-</span><span id="verifica_firma-71"><a href="#verifica_firma-71"><span class="linenos">71</span></a>                <span class="n">firma</span><span class="p">,</span>
-</span><span id="verifica_firma-72"><a href="#verifica_firma-72"><span class="linenos">72</span></a>                <span class="n">messaggio</span><span class="p">,</span>
-</span><span id="verifica_firma-73"><a href="#verifica_firma-73"><span class="linenos">73</span></a>                <span class="n">padding</span><span class="o">.</span><span class="n">PSS</span><span class="p">(</span>
-</span><span id="verifica_firma-74"><a href="#verifica_firma-74"><span class="linenos">74</span></a>                    <span class="n">mgf</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">MGF1</span><span class="p">(</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()),</span>
-</span><span id="verifica_firma-75"><a href="#verifica_firma-75"><span class="linenos">75</span></a>                    <span class="n">salt_length</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">PSS</span><span class="o">.</span><span class="n">MAX_LENGTH</span>
-</span><span id="verifica_firma-76"><a href="#verifica_firma-76"><span class="linenos">76</span></a>                <span class="p">),</span>
-</span><span id="verifica_firma-77"><a href="#verifica_firma-77"><span class="linenos">77</span></a>                <span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()</span>
-</span><span id="verifica_firma-78"><a href="#verifica_firma-78"><span class="linenos">78</span></a>            <span class="p">)</span>
-</span><span id="verifica_firma-79"><a href="#verifica_firma-79"><span class="linenos">79</span></a>            <span class="k">return</span> <span class="kc">True</span>
-</span><span id="verifica_firma-80"><a href="#verifica_firma-80"><span class="linenos">80</span></a>        <span class="k">except</span> <span class="n">InvalidSignature</span><span class="p">:</span>
-</span><span id="verifica_firma-81"><a href="#verifica_firma-81"><span class="linenos">81</span></a>            <span class="k">return</span> <span class="kc">False</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="verifica_firma-101"><a href="#verifica_firma-101"><span class="linenos">101</span></a><span class="k">def</span><span class="w"> </span><span class="nf">verifica_firma</span><span class="p">(</span><span class="n">chiave_pubblica</span><span class="p">:</span> <span class="n">rsa</span><span class="o">.</span><span class="n">RSAPublicKey</span><span class="p">,</span> <span class="n">firma</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">messaggio</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="verifica_firma-102"><a href="#verifica_firma-102"><span class="linenos">102</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Verifica l&#39;autenticità di una firma digitale rispetto a un messaggio specifico.</span>
+</span><span id="verifica_firma-103"><a href="#verifica_firma-103"><span class="linenos">103</span></a>
+</span><span id="verifica_firma-104"><a href="#verifica_firma-104"><span class="linenos">104</span></a><span class="sd">    Args:</span>
+</span><span id="verifica_firma-105"><a href="#verifica_firma-105"><span class="linenos">105</span></a><span class="sd">        chiave_pubblica (rsa.RSAPublicKey): La chiave pubblica presunta dell&#39;entità firmante (es. PK_CA2).</span>
+</span><span id="verifica_firma-106"><a href="#verifica_firma-106"><span class="linenos">106</span></a><span class="sd">        firma (bytes): La firma digitale da validare.</span>
+</span><span id="verifica_firma-107"><a href="#verifica_firma-107"><span class="linenos">107</span></a><span class="sd">        messaggio (bytes): Il messaggio su cui è stata calcolata la firma.</span>
+</span><span id="verifica_firma-108"><a href="#verifica_firma-108"><span class="linenos">108</span></a>
+</span><span id="verifica_firma-109"><a href="#verifica_firma-109"><span class="linenos">109</span></a><span class="sd">    Returns:</span>
+</span><span id="verifica_firma-110"><a href="#verifica_firma-110"><span class="linenos">110</span></a><span class="sd">        bool: True se la firma è valida e il messaggio integro, False altrimenti.</span>
+</span><span id="verifica_firma-111"><a href="#verifica_firma-111"><span class="linenos">111</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="verifica_firma-112"><a href="#verifica_firma-112"><span class="linenos">112</span></a>    <span class="k">try</span><span class="p">:</span>
+</span><span id="verifica_firma-113"><a href="#verifica_firma-113"><span class="linenos">113</span></a>        <span class="n">chiave_pubblica</span><span class="o">.</span><span class="n">verify</span><span class="p">(</span>
+</span><span id="verifica_firma-114"><a href="#verifica_firma-114"><span class="linenos">114</span></a>            <span class="n">firma</span><span class="p">,</span>
+</span><span id="verifica_firma-115"><a href="#verifica_firma-115"><span class="linenos">115</span></a>            <span class="n">messaggio</span><span class="p">,</span>
+</span><span id="verifica_firma-116"><a href="#verifica_firma-116"><span class="linenos">116</span></a>            <span class="n">padding</span><span class="o">.</span><span class="n">PSS</span><span class="p">(</span>
+</span><span id="verifica_firma-117"><a href="#verifica_firma-117"><span class="linenos">117</span></a>                <span class="n">mgf</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">MGF1</span><span class="p">(</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()),</span>
+</span><span id="verifica_firma-118"><a href="#verifica_firma-118"><span class="linenos">118</span></a>                <span class="n">salt_length</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">PSS</span><span class="o">.</span><span class="n">MAX_LENGTH</span>
+</span><span id="verifica_firma-119"><a href="#verifica_firma-119"><span class="linenos">119</span></a>            <span class="p">),</span>
+</span><span id="verifica_firma-120"><a href="#verifica_firma-120"><span class="linenos">120</span></a>            <span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()</span>
+</span><span id="verifica_firma-121"><a href="#verifica_firma-121"><span class="linenos">121</span></a>        <span class="p">)</span>
+</span><span id="verifica_firma-122"><a href="#verifica_firma-122"><span class="linenos">122</span></a>        <span class="k">return</span> <span class="kc">True</span>
+</span><span id="verifica_firma-123"><a href="#verifica_firma-123"><span class="linenos">123</span></a>    <span class="k">except</span> <span class="n">InvalidSignature</span><span class="p">:</span>
+</span><span id="verifica_firma-124"><a href="#verifica_firma-124"><span class="linenos">124</span></a>        <span class="k">return</span> <span class="kc">False</span>
 </span></pre></div>
 
 
-    
+            <div class="docstring"><p>Verifica l'autenticità di una firma digitale rispetto a un messaggio specifico.</p>
+
+<p>Args:
+    chiave_pubblica (rsa.RSAPublicKey): La chiave pubblica presunta dell'entità firmante (es. PK_CA2).
+    firma (bytes): La firma digitale da validare.
+    messaggio (bytes): Il messaggio su cui è stata calcolata la firma.</p>
+
+<p>Returns:
+    bool: True se la firma è valida e il messaggio integro, False altrimenti.</p>
+</div>
+
 
                 </section>
                 <section id="split_secret">
@@ -850,22 +1022,50 @@ client dell'utente per validare che il suo voto sia nel registro.</p>
 
     </div>
     <a class="headerlink" href="#split_secret"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="split_secret-32"><a href="#split_secret-32"><span class="linenos">32</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">split_secret</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">segreto</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">soglia</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_frammenti</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
-</span><span id="split_secret-33"><a href="#split_secret-33"><span class="linenos">33</span></a>        <span class="k">if</span> <span class="n">soglia</span> <span class="o">&gt;</span> <span class="n">n_frammenti</span><span class="p">:</span>
-</span><span id="split_secret-34"><a href="#split_secret-34"><span class="linenos">34</span></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;La soglia non può essere maggiore del numero di frammenti.&quot;</span><span class="p">)</span>
-</span><span id="split_secret-35"><a href="#split_secret-35"><span class="linenos">35</span></a>
-</span><span id="split_secret-36"><a href="#split_secret-36"><span class="linenos">36</span></a>        <span class="n">poly</span> <span class="o">=</span> <span class="p">[</span><span class="n">segreto</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">SystemRandom</span><span class="p">()</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">PRIME</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">soglia</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
-</span><span id="split_secret-37"><a href="#split_secret-37"><span class="linenos">37</span></a>
-</span><span id="split_secret-38"><a href="#split_secret-38"><span class="linenos">38</span></a>        <span class="n">frammenti</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="split_secret-39"><a href="#split_secret-39"><span class="linenos">39</span></a>        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_frammenti</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-</span><span id="split_secret-40"><a href="#split_secret-40"><span class="linenos">40</span></a>            <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_eval_poly</span><span class="p">(</span><span class="n">poly</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">PRIME</span><span class="p">)</span>
-</span><span id="split_secret-41"><a href="#split_secret-41"><span class="linenos">41</span></a>            <span class="n">frammenti</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
-</span><span id="split_secret-42"><a href="#split_secret-42"><span class="linenos">42</span></a>
-</span><span id="split_secret-43"><a href="#split_secret-43"><span class="linenos">43</span></a>        <span class="k">return</span> <span class="n">frammenti</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="split_secret-39"><a href="#split_secret-39"><span class="linenos">39</span></a><span class="k">def</span><span class="w"> </span><span class="nf">split_secret</span><span class="p">(</span><span class="n">segreto</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">soglia</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_frammenti</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
+</span><span id="split_secret-40"><a href="#split_secret-40"><span class="linenos">40</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Divide un segreto in n frammenti, dei quali ne servono almeno t (soglia) per la ricostruzione.</span>
+</span><span id="split_secret-41"><a href="#split_secret-41"><span class="linenos">41</span></a>
+</span><span id="split_secret-42"><a href="#split_secret-42"><span class="linenos">42</span></a><span class="sd">    L&#39;algoritmo genera un polinomio casuale di grado (soglia - 1) il cui</span>
+</span><span id="split_secret-43"><a href="#split_secret-43"><span class="linenos">43</span></a><span class="sd">    termine noto (coefficiente 0) è il segreto stesso.</span>
+</span><span id="split_secret-44"><a href="#split_secret-44"><span class="linenos">44</span></a>
+</span><span id="split_secret-45"><a href="#split_secret-45"><span class="linenos">45</span></a><span class="sd">    Args:</span>
+</span><span id="split_secret-46"><a href="#split_secret-46"><span class="linenos">46</span></a><span class="sd">        segreto (int): Il segreto numerico da frammentare (es. interi estratti dalla SK).</span>
+</span><span id="split_secret-47"><a href="#split_secret-47"><span class="linenos">47</span></a><span class="sd">        soglia (int): Il numero minimo di frammenti per la ricostruzione (t=2 nel progetto).</span>
+</span><span id="split_secret-48"><a href="#split_secret-48"><span class="linenos">48</span></a><span class="sd">        n_frammenti (int): Il numero totale di frammenti da generare (n=3 nel progetto).</span>
+</span><span id="split_secret-49"><a href="#split_secret-49"><span class="linenos">49</span></a>
+</span><span id="split_secret-50"><a href="#split_secret-50"><span class="linenos">50</span></a><span class="sd">    Returns:</span>
+</span><span id="split_secret-51"><a href="#split_secret-51"><span class="linenos">51</span></a><span class="sd">        list[tuple[int, int]]: Una lista di coppie (x, y) che rappresentano i frammenti.</span>
+</span><span id="split_secret-52"><a href="#split_secret-52"><span class="linenos">52</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="split_secret-53"><a href="#split_secret-53"><span class="linenos">53</span></a>    <span class="k">if</span> <span class="n">soglia</span> <span class="o">&gt;</span> <span class="n">n_frammenti</span><span class="p">:</span>
+</span><span id="split_secret-54"><a href="#split_secret-54"><span class="linenos">54</span></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;La soglia non può essere maggiore del numero di frammenti.&quot;</span><span class="p">)</span>
+</span><span id="split_secret-55"><a href="#split_secret-55"><span class="linenos">55</span></a>    
+</span><span id="split_secret-56"><a href="#split_secret-56"><span class="linenos">56</span></a>    <span class="c1"># Il polinomio ha grado (soglia - 1). Il termine noto poly[0] è il segreto.</span>
+</span><span id="split_secret-57"><a href="#split_secret-57"><span class="linenos">57</span></a>    <span class="n">poly</span> <span class="o">=</span> <span class="p">[</span><span class="n">segreto</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">SystemRandom</span><span class="p">()</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">PRIME</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">soglia</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
+</span><span id="split_secret-58"><a href="#split_secret-58"><span class="linenos">58</span></a>    
+</span><span id="split_secret-59"><a href="#split_secret-59"><span class="linenos">59</span></a>    <span class="n">frammenti</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="split_secret-60"><a href="#split_secret-60"><span class="linenos">60</span></a>    <span class="c1"># Generiamo i frammenti calcolando il polinomio per x = 1, 2, ..., n</span>
+</span><span id="split_secret-61"><a href="#split_secret-61"><span class="linenos">61</span></a>    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_frammenti</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+</span><span id="split_secret-62"><a href="#split_secret-62"><span class="linenos">62</span></a>        <span class="n">y</span> <span class="o">=</span> <span class="n">_eval_poly</span><span class="p">(</span><span class="n">poly</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">PRIME</span><span class="p">)</span>
+</span><span id="split_secret-63"><a href="#split_secret-63"><span class="linenos">63</span></a>        <span class="n">frammenti</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+</span><span id="split_secret-64"><a href="#split_secret-64"><span class="linenos">64</span></a>        
+</span><span id="split_secret-65"><a href="#split_secret-65"><span class="linenos">65</span></a>    <span class="k">return</span> <span class="n">frammenti</span>
 </span></pre></div>
 
 
-    
+            <div class="docstring"><p>Divide un segreto in n frammenti, dei quali ne servono almeno t (soglia) per la ricostruzione.</p>
+
+<p>L'algoritmo genera un polinomio casuale di grado (soglia - 1) il cui
+termine noto (coefficiente 0) è il segreto stesso.</p>
+
+<p>Args:
+    segreto (int): Il segreto numerico da frammentare (es. interi estratti dalla SK).
+    soglia (int): Il numero minimo di frammenti per la ricostruzione (t=2 nel progetto).
+    n_frammenti (int): Il numero totale di frammenti da generare (n=3 nel progetto).</p>
+
+<p>Returns:
+    list[tuple[int, int]]: Una lista di coppie (x, y) che rappresentano i frammenti.</p>
+</div>
+
 
                 </section>
                 <section id="recover_secret">
@@ -879,27 +1079,44 @@ client dell'utente per validare che il suo voto sia nel registro.</p>
 
     </div>
     <a class="headerlink" href="#recover_secret"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="recover_secret-62"><a href="#recover_secret-62"><span class="linenos">62</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">recover_secret</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frammenti</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-</span><span id="recover_secret-63"><a href="#recover_secret-63"><span class="linenos">63</span></a>        <span class="n">segreto_ricostruito</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span id="recover_secret-64"><a href="#recover_secret-64"><span class="linenos">64</span></a>
-</span><span id="recover_secret-65"><a href="#recover_secret-65"><span class="linenos">65</span></a>        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="p">(</span><span class="n">x_j</span><span class="p">,</span> <span class="n">y_j</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">frammenti</span><span class="p">):</span>
-</span><span id="recover_secret-66"><a href="#recover_secret-66"><span class="linenos">66</span></a>            <span class="n">numeratore</span> <span class="o">=</span> <span class="mi">1</span>
-</span><span id="recover_secret-67"><a href="#recover_secret-67"><span class="linenos">67</span></a>            <span class="n">denominatore</span> <span class="o">=</span> <span class="mi">1</span>
-</span><span id="recover_secret-68"><a href="#recover_secret-68"><span class="linenos">68</span></a>
-</span><span id="recover_secret-69"><a href="#recover_secret-69"><span class="linenos">69</span></a>            <span class="k">for</span> <span class="n">m</span><span class="p">,</span> <span class="p">(</span><span class="n">x_m</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">frammenti</span><span class="p">):</span>
-</span><span id="recover_secret-70"><a href="#recover_secret-70"><span class="linenos">70</span></a>                <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="n">m</span><span class="p">:</span>
-</span><span id="recover_secret-71"><a href="#recover_secret-71"><span class="linenos">71</span></a>                    <span class="k">continue</span>
-</span><span id="recover_secret-72"><a href="#recover_secret-72"><span class="linenos">72</span></a>                <span class="n">numeratore</span> <span class="o">=</span> <span class="p">(</span><span class="n">numeratore</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="n">x_m</span><span class="p">))</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">PRIME</span>
-</span><span id="recover_secret-73"><a href="#recover_secret-73"><span class="linenos">73</span></a>                <span class="n">denominatore</span> <span class="o">=</span> <span class="p">(</span><span class="n">denominatore</span> <span class="o">*</span> <span class="p">(</span><span class="n">x_j</span> <span class="o">-</span> <span class="n">x_m</span><span class="p">))</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">PRIME</span>
-</span><span id="recover_secret-74"><a href="#recover_secret-74"><span class="linenos">74</span></a>
-</span><span id="recover_secret-75"><a href="#recover_secret-75"><span class="linenos">75</span></a>            <span class="n">lagrange_poly</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_j</span> <span class="o">*</span> <span class="n">numeratore</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mod_inverse</span><span class="p">(</span><span class="n">denominatore</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">PRIME</span><span class="p">))</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">PRIME</span>
-</span><span id="recover_secret-76"><a href="#recover_secret-76"><span class="linenos">76</span></a>            <span class="n">segreto_ricostruito</span> <span class="o">=</span> <span class="p">(</span><span class="n">segreto_ricostruito</span> <span class="o">+</span> <span class="n">lagrange_poly</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">PRIME</span>
-</span><span id="recover_secret-77"><a href="#recover_secret-77"><span class="linenos">77</span></a>
-</span><span id="recover_secret-78"><a href="#recover_secret-78"><span class="linenos">78</span></a>        <span class="k">return</span> <span class="p">(</span><span class="n">segreto_ricostruito</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">PRIME</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">PRIME</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="recover_secret-88"><a href="#recover_secret-88"><span class="linenos"> 88</span></a><span class="k">def</span><span class="w"> </span><span class="nf">recover_secret</span><span class="p">(</span><span class="n">frammenti</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span><span id="recover_secret-89"><a href="#recover_secret-89"><span class="linenos"> 89</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Ricostruisce il segreto utilizzando l&#39;interpolazione di Lagrange.</span>
+</span><span id="recover_secret-90"><a href="#recover_secret-90"><span class="linenos"> 90</span></a>
+</span><span id="recover_secret-91"><a href="#recover_secret-91"><span class="linenos"> 91</span></a><span class="sd">    Args:</span>
+</span><span id="recover_secret-92"><a href="#recover_secret-92"><span class="linenos"> 92</span></a><span class="sd">        frammenti (list[tuple[int, int]]): Una lista di almeno &#39;t&#39; frammenti (x, y).</span>
+</span><span id="recover_secret-93"><a href="#recover_secret-93"><span class="linenos"> 93</span></a>
+</span><span id="recover_secret-94"><a href="#recover_secret-94"><span class="linenos"> 94</span></a><span class="sd">    Returns:</span>
+</span><span id="recover_secret-95"><a href="#recover_secret-95"><span class="linenos"> 95</span></a><span class="sd">        int: Il segreto ricostruito (il termine noto del polinomio originale).</span>
+</span><span id="recover_secret-96"><a href="#recover_secret-96"><span class="linenos"> 96</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="recover_secret-97"><a href="#recover_secret-97"><span class="linenos"> 97</span></a>    <span class="n">segreto_ricostruito</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="recover_secret-98"><a href="#recover_secret-98"><span class="linenos"> 98</span></a>    
+</span><span id="recover_secret-99"><a href="#recover_secret-99"><span class="linenos"> 99</span></a>    <span class="c1"># Interpolazione di Lagrange per trovare P(0)</span>
+</span><span id="recover_secret-100"><a href="#recover_secret-100"><span class="linenos">100</span></a>    <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="p">(</span><span class="n">x_j</span><span class="p">,</span> <span class="n">y_j</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">frammenti</span><span class="p">):</span>
+</span><span id="recover_secret-101"><a href="#recover_secret-101"><span class="linenos">101</span></a>        <span class="n">numeratore</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span id="recover_secret-102"><a href="#recover_secret-102"><span class="linenos">102</span></a>        <span class="n">denominatore</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span id="recover_secret-103"><a href="#recover_secret-103"><span class="linenos">103</span></a>        
+</span><span id="recover_secret-104"><a href="#recover_secret-104"><span class="linenos">104</span></a>        <span class="k">for</span> <span class="n">m</span><span class="p">,</span> <span class="p">(</span><span class="n">x_m</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">frammenti</span><span class="p">):</span>
+</span><span id="recover_secret-105"><a href="#recover_secret-105"><span class="linenos">105</span></a>            <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="n">m</span><span class="p">:</span>
+</span><span id="recover_secret-106"><a href="#recover_secret-106"><span class="linenos">106</span></a>                <span class="k">continue</span>
+</span><span id="recover_secret-107"><a href="#recover_secret-107"><span class="linenos">107</span></a>            <span class="n">numeratore</span> <span class="o">=</span> <span class="p">(</span><span class="n">numeratore</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="n">x_m</span><span class="p">))</span> <span class="o">%</span> <span class="n">PRIME</span>
+</span><span id="recover_secret-108"><a href="#recover_secret-108"><span class="linenos">108</span></a>            <span class="n">denominatore</span> <span class="o">=</span> <span class="p">(</span><span class="n">denominatore</span> <span class="o">*</span> <span class="p">(</span><span class="n">x_j</span> <span class="o">-</span> <span class="n">x_m</span><span class="p">))</span> <span class="o">%</span> <span class="n">PRIME</span>
+</span><span id="recover_secret-109"><a href="#recover_secret-109"><span class="linenos">109</span></a>            
+</span><span id="recover_secret-110"><a href="#recover_secret-110"><span class="linenos">110</span></a>        <span class="n">lagrange_poly</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_j</span> <span class="o">*</span> <span class="n">numeratore</span> <span class="o">*</span> <span class="n">_mod_inverse</span><span class="p">(</span><span class="n">denominatore</span><span class="p">,</span> <span class="n">PRIME</span><span class="p">))</span> <span class="o">%</span> <span class="n">PRIME</span>
+</span><span id="recover_secret-111"><a href="#recover_secret-111"><span class="linenos">111</span></a>        <span class="n">segreto_ricostruito</span> <span class="o">=</span> <span class="p">(</span><span class="n">segreto_ricostruito</span> <span class="o">+</span> <span class="n">lagrange_poly</span><span class="p">)</span> <span class="o">%</span> <span class="n">PRIME</span>
+</span><span id="recover_secret-112"><a href="#recover_secret-112"><span class="linenos">112</span></a>        
+</span><span id="recover_secret-113"><a href="#recover_secret-113"><span class="linenos">113</span></a>    <span class="k">return</span> <span class="p">(</span><span class="n">segreto_ricostruito</span> <span class="o">+</span> <span class="n">PRIME</span><span class="p">)</span> <span class="o">%</span> <span class="n">PRIME</span>
 </span></pre></div>
 
 
-    
+            <div class="docstring"><p>Ricostruisce il segreto utilizzando l'interpolazione di Lagrange.</p>
+
+<p>Args:
+    frammenti (list[tuple[int, int]]): Una lista di almeno 't' frammenti (x, y).</p>
+
+<p>Returns:
+    int: Il segreto ricostruito (il termine noto del polinomio originale).</p>
+</div>
+
 
                 </section>
     </main>
