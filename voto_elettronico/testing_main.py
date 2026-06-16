@@ -43,10 +43,10 @@ def genera_cf_casuale():
 
 
 # =========================================================================
-# MACRO-PARTE 1: TESTING DELLE PRIMITIVE CRITTOGRAFICHE
+# SEZIONE 1: TESTING DELLE PRIMITIVE CRITTOGRAFICHE
 # =========================================================================
 def test_primitive_crittografiche():
-    stampa_titolo("MACRO-PARTE 1: TESTING DELLE PRIMITIVE CRITTOGRAFICHE")
+    stampa_titolo("Sezione 1: TESTING DELLE PRIMITIVE CRITTOGRAFICHE")
 
     print("[*] 1. Test Funzioni di Hashing (SHA-256)")
     testo_in_chiaro = "CodiceFiscaleDiProva123"
@@ -87,10 +87,10 @@ def test_primitive_crittografiche():
 
 
 # =========================================================================
-# MACRO-PARTE 2: FLUSSO DETTAGLIATO PER UN SINGOLO UTENTE
+# Sezione 2: FLUSSO DETTAGLIATO PER UN SINGOLO UTENTE
 # =========================================================================
 def simula_singolo_utente():
-    stampa_titolo("MACRO-PARTE 2: PROCEDURE DI VOTO PER UN SINGOLO UTENTE")
+    stampa_titolo("Sezione 2: PROCEDURE DI VOTO PER UN SINGOLO UTENTE")
     print("In questa sezione seguiremo i dati in chiaro di un singolo Elettore e \nmostreremo come vengono trasformati nelle varie fasi.\n")
 
     # [ SETUP FASE 0 ]
@@ -173,15 +173,15 @@ def simula_singolo_utente():
     print("    Transazione crittografica inserita come foglia nel Merkle Tree.")
     print(f"    Root Hash provvisoria: {tronca_dati(server.merkle.get_root_hash())}")
 
-    # Ritorna i parametri necessari per testare lo scrutinio nella Macro-Parte 3
+    # Ritorna i parametri necessari per testare lo scrutinio nella Sezione 3
     return pk_elezione, frammento_ca1, frammento_ca2, commissione, ca1, ca2, ente_fisico
 
 
 # =========================================================================
-# MACRO-PARTE 3: SIMULAZIONE MASSIVA, SCRUTINIO E PUBBLICAZIONE
+# Sezione 3: SIMULAZIONE MASSIVA, SCRUTINIO E PUBBLICAZIONE
 # =========================================================================
 def simula_elezione_massiva(pk_elezione, frammento_ca1, frammento_ca2, commissione, ca1, ca2, ente_fisico):
-    stampa_titolo("MACRO-PARTE 3: SIMULAZIONE ELEZIONE MASSIVA E SCRUTINIO")
+    stampa_titolo("Sezione 3: SIMULAZIONE ELEZIONE MASSIVA E SCRUTINIO")
     print("Abbiamo mostrato il funzionamento delle primitive. Abbiamo mostrato il")
     print("funzionamento di tutto ciò che riguarda un singolo utente votante in")
     print("chiaro. In questa fase simuleremo un'intera votazione completa in cui")
