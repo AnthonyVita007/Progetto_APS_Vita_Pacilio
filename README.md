@@ -1,61 +1,80 @@
-# Progetto_APS_Vita_Pacilio
+# Algoritmi e Protocolli per la Sicurezza (APS) - Gruppo 15
 
-Breve descrizione
------------------
-Questo repository contiene una simulazione didattica del protocollo di voto elettronico
-"Vita-Pacilio". L'implementazione è organizzata come package Python `voto_elettronico` e
-modella le fasi principali del protocollo (identity proofing, registrazione, autenticazione,
-espressione del voto, consenso e scrutinio).
+- *Antonio Pacilio (IE22700198)*
+- *Anthony Vita (IE22700195)*
 
-Scopo
-------
-- Fornire un'implementazione sperimentale delle primitive crittografiche usate nel protocollo.
-- Simulare l'interazione tra attori (Ente Fisico, CA1, CA2, Commissione, Utenti) e nodi server.
-- Mostrare le problematiche pratiche (packaging Python, limiti di RSA-OAEP, Shamir Secret Sharing, Merkle Tree).
+## Descrizione del Progetto
 
-Struttura principale
---------------------
-- `voto_elettronico/crypto` — primitive crittografiche (RSA, Merkle, Shamir).
-- `voto_elettronico/actors` — attori della simulazione (CA1, CA2, Commissione, Ente Fisico, Utente, ServerNode).
-- `voto_elettronico/network` — orchestratore di consenso simulato.
-- `voto_elettronico/main.py` — entrypoint della simulazione.
+Questo repository contiene l'implementazione in Python di un protocollo crittografico per la conduzione di un'elezione elettronica sicura. Il sistema è modellato per supportare un'elezione con **lista chiusa e voto singolo**, garantendo proprietà fondamentali quali:
 
-Prerequisiti
-------------
-- Python 3.10+ (o la stessa versione usata nell'ambiente Anaconda della macchina).
-- Pacchetto `cryptography` installato.
+* **Autenticità e Segretezza** dell'elettore.
 
-Suggerimento: crea e attiva un ambiente virtuale (opzionale ma consigliato):
+* **Integrità** del voto (nessuna alterazione possibile).
 
-```powershell
-# Windows PowerShell (conda)
-conda create -n voto_env python=3.10 -y
-conda activate voto_env
+* **Verificabilità** del processo di scrutinio.
 
-# oppure con venv/pip
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
+Il protocollo fa uso di primitive crittografiche avanzate tra cui crittografia asimmetrica (RSA), funzioni di hash, Alberi di Merkle e frammentazione del segreto (Shamir's Secret Sharing).
+
+## Struttura del Repository
+
+L'architettura software è divisa nei seguenti moduli principali all'interno del package `voto_elettronico/`:
+
+* **`actors/`**: Implementa le entità del sistema (`utente`, `commissione`, `server_node`, `ca1`, `ca2`, `ente_fisico`).
+
+* **`crypto/`**: Modulo con le utility crittografiche (`rsa_utils`, `hash_utils`, `merkle_tree`, `shamir_sharing`).
+
+* **`network/`**: Gestisce il layer di rete e l'algoritmo di consenso (`consensus`).
+
+* **`benchmarks/`**: Utility per l'analisi delle prestazioni e il tracciamento dei tempi di esecuzione (`utils`).
+
+* **`config.py`**: Parametri di configurazione globali del sistema.
+
+* **`docs/`**: Documentazione generata automaticamente del codice sorgente.
+
+## 🚀 Come Eseguire il Codice
+
+Il progetto richiede **Python 3** (testato su Python 3.13). Assicurati di avere un ambiente Python configurato e di trovarti nella root del progetto.
+
+### 1. Simulazione del Sistema di Voto
+
+Per avviare l'esecuzione standard del protocollo, che simula un'intera elezione (registrazione, voto, consenso, scrutinio), esegui il file main:
+
+```
+python voto_elettronico/main.py
+
 ```
 
-Installazione dipendenze
-------------------------
-Installa la dipendenza principale con pip:
+*L'output a terminale mostrerà i log di sistema, confermando il successo o il fallimento delle singole fasi crittografiche.*
 
-```powershell
-pip install cryptography
-# oppure, se fornisci un requirements.txt, usa:
-# pip install -r requirements.txt
+### 2. Analisi delle Prestazioni (Benchmark)
+
+Per avviare i test prestazionali relativi alle operazioni crittografiche e di rete (come descritto nel Work Package dei Benchmark), esegui:
+
+```
+python voto_elettronico/run_benchmarks.py
+
 ```
 
-Esecuzione della simulazione
------------------------------
-È importante eseguire il modulo dal root del progetto (la cartella che contiene `voto_elettronico`),
-in modo che il package venga risolto correttamente:
+*Verranno generati i tempi di esecuzione delle singole primitive per valutare l'impatto computazionale del protocollo.*
 
-```powershell
-cd Progetto_APS_Vita_Pacilio
-python -m voto_elettronico.main
-```
+## 📚 Documentazione del Codice (pdoc)
 
+L'intero progetto è stato ampiamente documentato seguendo gli standard delle **Docstring** a livello di modulo, classe e metodo, come indicato nella relazione tecnica.
 
+Per usufruire della documentazione, è stata generata un'interfaccia HTML navigabile tramite la libreria `pdoc`.
 
+**Come consultare la documentazione:**
+
+1. Naviga all'interno della cartella `docs/` presente nella root del progetto.
+
+2. Apri il file **`index.html`** (o in alternativa `voto_elettronico.html`) utilizzando un qualsiasi browser web (Chrome, Firefox, Safari, Edge).
+
+3. Utilizza il menu di navigazione laterale o la barra di ricerca integrata per esplorare:
+
+   * Le descrizioni dei singoli moduli.
+
+   * Le classi, i loro attributi (es. ledger, merkle) e i loro metodi.
+
+   * I tipi di parametri accettati (`Args`) e restituiti (`Returns`) da ciascuna funzione crittografica.
+
+*(Nota: Non è necessario avere `pdoc` installato per leggere la documentazione, i file HTML statici sono già pre-generati nella cartella).*
