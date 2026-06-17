@@ -155,9 +155,10 @@ def simula_singolo_utente():
     
     # [ ESECUZIONE FASE 2 ]
     print("\n--- FASE 2: AUTHENTICATION CEREMONY ---")
+    fake_sk, fake_pk = genera_coppia_chiavi(config.RSA_KEY_SIZE)
     challenge = ca2.genera_challenge(utente.pk)
     print(f"    CA2 invia Challenge (Nonce in chiaro): {tronca_dati(challenge)}")
-    firma_chall = firma_messaggio(utente.sk, challenge)
+    firma_chall = firma_messaggio(fake_sk, challenge)
     print(f"    Dispositivo Elettore firma Challenge con SK_Utente: {tronca_dati(firma_chall)}")
     check_firma=ca2.verifica_challenge(utente.pk, firma_chall)
     if check_firma==True:

@@ -63,7 +63,7 @@ Per testare il codice in tutte le sue parti è stato predisposto un apposito fil
 di ogni primitiva crittografica utilizzata, test relativi alla procedura di voto che segue il singolo utente e che attraversano tutte le fasi
 del protocollo, e infine test relativi ad una piccola simulazione di voto completa con 10 votanti randomizzati.
 
-Ognuno dei test presenti è predisposto per essere personalizzabile con parametri a propria scelta:
+Ognuno dei test presenti è predisposto per essere personalizzabile con parametri a proprio piacimento:
 
 ```
 python voto_elettronico/rtesting_main.py
