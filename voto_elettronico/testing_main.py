@@ -10,6 +10,8 @@ Il file è suddiviso in tre MACRO-PARTI:
 import binascii
 import random
 import string
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric.rsa import RSAPublicKey
 
 # Importazioni rigorosamente dal package fornito
 from voto_elettronico import config
@@ -29,12 +31,25 @@ def stampa_titolo(testo: str):
 
 def tronca_dati(dati) -> str:
     """Utility per mostrare solo una porzione leggibile di dati crittografici lunghi."""
-    if isinstance(dati, bytes):
+    # Controllo se l'input è un oggetto Chiave Pubblica RSA
+    if isinstance(dati, RSAPublicKey):
+        # Serializzazione in formato PEM (standard testuale)
+        pem_bytes = dati.public_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PublicFormat.SubjectPublicKeyInfo
+        )
+        # Convertiamo in esadecimale pulito (rimuovendo i newline del PEM se necessario)
+        hex_str = binascii.hexlify(pem_bytes).decode()
+        return f"[RSA_PK: {hex_str[:16]}...{hex_str[-8:]}]"
+        
+    elif isinstance(dati, bytes):
         hex_str = binascii.hexlify(dati).decode()
-        return f"{hex_str[:16]}...{hex_str[-8:]}" if len(hex_str) > 24 else hex_str
+        return f"0x{hex_str[:16]}...{hex_str[-8:]}" if len(hex_str) > 24 else f"0x{hex_str}"
+        
     elif isinstance(dati, int):
         str_int = str(dati)
         return f"{str_int[:10]}...{str_int[-5:]}" if len(str_int) > 15 else str_int
+        
     return str(dati)
 
 def genera_cf_casuale():
@@ -68,7 +83,7 @@ def test_primitive_crittografiche():
     decifrato = decifra_oaep(sk, cifrato)
     print(f"    - Dato decifrato con SK (Verifica): {decifrato}\n")
 
-    print("[*] 3. Test Firme Digitali (RSA-PSS)")
+    print("[*] 3. Test Firme Digitali (RSA-FDH)")
     messaggio_da_firmare = b"Token Autorizzativo 001"
     print(f"    - Messaggio in chiaro: {messaggio_da_firmare}")
     firma = firma_messaggio(sk, messaggio_da_firmare)
@@ -123,7 +138,7 @@ def simula_singolo_utente():
     
     # Processo Identity Proofing
     h0 = ente_fisico.calcola_h0_per_elektor(dati_utente_chiaro)
-    print(f"    Ente Fisico calcola H0: {tronca_dati(h0)}")
+    print(f"    Elettore calcola H0: {tronca_dati(h0)}")
     cert_ca1 = ca1.emetti_certificato(h0)
     print(f"    CA1 emette certificato d'identità: {tronca_dati(cert_ca1)}")
     
@@ -144,9 +159,11 @@ def simula_singolo_utente():
     print(f"    CA2 invia Challenge (Nonce in chiaro): {tronca_dati(challenge)}")
     firma_chall = firma_messaggio(utente.sk, challenge)
     print(f"    Dispositivo Elettore firma Challenge con SK_Utente: {tronca_dati(firma_chall)}")
-    if ca2.verifica_challenge(utente.pk, firma_chall):
+    check_firma=ca2.verifica_challenge(utente.pk, firma_chall)
+    if check_firma==True:
          print("    CA2 verifica la firma: Esito Positivo. Accesso accordato.")
-
+    else:
+        print(" CA2 verifica la firma: Esito Negativo. Accesso ")
 
     # [ SETUP FASE 3 ]
     # L'utilizzatore sceglie il candidato per l'Elettore test.

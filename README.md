@@ -57,6 +57,21 @@ python voto_elettronico/run_benchmarks.py
 
 *Verranno generati i tempi di esecuzione delle singole primitive per valutare l'impatto computazionale del protocollo.*
 
+### 3. Testing del protocollo
+
+Per testare il codice in tutte le sue parti è stato predisposto un apposito file. In esso sono presenti test con relative stampe
+di ogni primitiva crittografica utilizzata, test relativi alla procedura di voto che segue il singolo utente e che attraversano tutte le fasi
+del protocollo, e infine test relativi ad una piccola simulazione di voto completa con 10 votanti randomizzati.
+
+Ognuno dei test presenti è predisposto per essere personalizzabile con parametri a propria scelta:
+
+```
+python voto_elettronico/rtesting_main.py
+
+```
+
+*Verranno stampati dei log che mostrano tutti i test configurati all'interno del file*
+
 ## 📚 Documentazione del Codice (pdoc)
 
 L'intero progetto è stato ampiamente documentato seguendo gli standard delle **Docstring** a livello di modulo, classe e metodo, come indicato nella relazione tecnica.
