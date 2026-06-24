@@ -66,7 +66,7 @@ del protocollo, e infine test relativi ad una piccola simulazione di voto comple
 Ognuno dei test presenti è predisposto per essere personalizzabile con parametri a proprio piacimento:
 
 ```
-python voto_elettronico/rtesting_main.py
+python voto_elettronico/testing_main.py
 
 ```
 
